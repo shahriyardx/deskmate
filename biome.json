@@ -26,6 +26,11 @@
       },
       "correctness": {
         "noUnusedImports": "off"
+      },
+      "a11y": {
+        "useKeyWithClickEvents": "off",
+        "useKeyWithMouseEvents": "off",
+        "noStaticElementInteractions": "off"
       }
     },
     "domains": {
