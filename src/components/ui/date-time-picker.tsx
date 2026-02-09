@@ -1,57 +1,57 @@
-"use client";
+"use client"
 
-import { format } from "date-fns";
+import { format } from "date-fns"
 
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { CalendarIcon } from "lucide-react";
+} from "@/components/ui/popover"
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
+import { CalendarIcon } from "lucide-react"
 
 type DateTimePickerProps = {
-  value?: Date;
-  onChange: (date?: Date) => void;
-};
+  value?: Date
+  onChange: (date?: Date) => void
+}
 
 export function DateTimePicker({ value, onChange }: DateTimePickerProps) {
   function handleDateSelect(date?: Date) {
-    if (!date) return;
-    const base = value ?? new Date();
-    const newDate = new Date(base);
+    if (!date) return
+    const base = value ?? new Date()
+    const newDate = new Date(base)
 
-    newDate.setFullYear(date.getFullYear());
-    newDate.setMonth(date.getMonth());
-    newDate.setDate(date.getDate());
+    newDate.setFullYear(date.getFullYear())
+    newDate.setMonth(date.getMonth())
+    newDate.setDate(date.getDate())
 
-    onChange(newDate);
+    onChange(newDate)
   }
 
   function handleTimeChange(type: "hour" | "minute" | "ampm", val: string) {
-    const base = value ?? new Date();
-    const newDate = new Date(base);
+    const base = value ?? new Date()
+    const newDate = new Date(base)
 
     if (type === "hour") {
-      const hour = parseInt(val, 10);
-      const isPM = newDate.getHours() >= 12;
-      newDate.setHours(isPM ? hour + 12 : hour);
+      const hour = parseInt(val, 10)
+      const isPM = newDate.getHours() >= 12
+      newDate.setHours(isPM ? hour + 12 : hour)
     }
 
     if (type === "minute") {
-      newDate.setMinutes(parseInt(val, 10));
+      newDate.setMinutes(parseInt(val, 10))
     }
 
     if (type === "ampm") {
-      const h = newDate.getHours();
-      if (val === "AM" && h >= 12) newDate.setHours(h - 12);
-      if (val === "PM" && h < 12) newDate.setHours(h + 12);
+      const h = newDate.getHours()
+      if (val === "AM" && h >= 12) newDate.setHours(h - 12)
+      if (val === "PM" && h < 12) newDate.setHours(h + 12)
     }
 
-    onChange(newDate);
+    onChange(newDate)
   }
 
   return (
@@ -157,5 +157,5 @@ export function DateTimePicker({ value, onChange }: DateTimePickerProps) {
         </div>
       </PopoverContent>
     </Popover>
-  );
+  )
 }

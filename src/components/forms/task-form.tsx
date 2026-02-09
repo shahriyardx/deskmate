@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import z from "zod";
-import { UseFormReturn, useWatch } from "react-hook-form";
+import z from "zod"
+import { UseFormReturn, useWatch } from "react-hook-form"
 import {
   Form,
   FormControl,
@@ -9,7 +9,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
+} from "../ui/form"
 import {
   Select,
   SelectContent,
@@ -17,13 +17,13 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
-import { DateTimePicker } from "../ui/date-time-picker";
-import { Button } from "../ui/button";
-import { se } from "date-fns/locale";
-import { cn } from "@/lib/utils";
+} from "@/components/ui/select"
+import { Input } from "../ui/input"
+import { Textarea } from "../ui/textarea"
+import { DateTimePicker } from "../ui/date-time-picker"
+import { Button } from "../ui/button"
+import { se } from "date-fns/locale"
+import { cn } from "@/lib/utils"
 
 export const taskSchema = z.object({
   title: z.string(),
@@ -32,17 +32,17 @@ export const taskSchema = z.object({
   starts_at: z.date(),
   ends_at: z.date(),
   remind_hours: z.coerce.number(),
-});
+})
 
-export type TaskFormInput = z.input<typeof taskSchema>;
-export type TaskSchema = z.output<typeof taskSchema>;
+export type TaskFormInput = z.input<typeof taskSchema>
+export type TaskSchema = z.output<typeof taskSchema>
 
 const TaskForm = ({ form }: { form: UseFormReturn<TaskFormInput> }) => {
   const selectedType = useWatch({
     control: form.control,
     name: "type",
-  });
-  console.log(selectedType);
+  })
+  console.log(selectedType)
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(console.log)} className="space-y-5">
@@ -140,7 +140,7 @@ const TaskForm = ({ form }: { form: UseFormReturn<TaskFormInput> }) => {
         </div>
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default TaskForm;
+export default TaskForm
