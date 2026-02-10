@@ -23,6 +23,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  tasks         Task[]
 
   @@unique([email])
   @@map("user")
@@ -74,4 +75,22 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model Task {
+  id           String    @id @default(cuid())
+  title        String
+  description  String?
+  type         String
+  starts_at    DateTime?
+  ends_at      DateTime?
+  remind_hours Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  is_completed Boolean   @default(false)
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@map("task")
 }

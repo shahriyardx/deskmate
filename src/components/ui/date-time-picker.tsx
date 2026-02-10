@@ -51,6 +51,9 @@ export function DateTimePicker({ value, onChange }: DateTimePickerProps) {
       if (val === "PM" && h < 12) newDate.setHours(h + 12)
     }
 
+    newDate.setSeconds(0)
+    newDate.setMilliseconds(0)
+
     onChange(newDate)
   }
 
