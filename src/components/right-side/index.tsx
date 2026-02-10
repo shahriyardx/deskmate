@@ -1,4 +1,3 @@
-import React from "react"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import AddTaskView from "./add-task"
 import { useRightContext } from "@/context/right-context"

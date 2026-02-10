@@ -4,6 +4,7 @@ import "./globals.css"
 import Stage from "@/components/stage"
 import { AuthProvider } from "@/context/auth-context"
 import { RightProvider } from "@/context/right-context"
+import RequireLandscape from "@/components/require-landscape"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,11 +31,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
       >
-        <AuthProvider>
-          <RightProvider>
-            <Stage>{children}</Stage>
-          </RightProvider>
-        </AuthProvider>
+        <RequireLandscape>
+          <AuthProvider>
+            <RightProvider>
+              <Stage>{children}</Stage>
+            </RightProvider>
+          </AuthProvider>
+        </RequireLandscape>
       </body>
     </html>
   )
