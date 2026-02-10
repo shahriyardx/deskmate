@@ -25,7 +25,15 @@ export const AuthProvider = ({ children }: ComponentProps<"div">) => {
   )
 }
 
-export const useAuth = () => {
+export const useAuth = ({ required = false }: { required?: boolean } = {}) => {
   const context = useContext(AuthContext)
-  return context
+
+  if (required && !context?.data) {
+    throw new Error("No auth context found")
+  }
+
+  return {
+    ...context,
+    data: required ? (context.data as UseSessionReturn) : context.data,
+  }
 }
