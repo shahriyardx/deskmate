@@ -1,6 +1,5 @@
 "use client"
 
-import z from "zod"
 import { UseFormReturn, useWatch } from "react-hook-form"
 import {
   Form,
@@ -23,13 +22,16 @@ import { Textarea } from "../ui/textarea"
 import { DateTimePicker } from "../ui/date-time-picker"
 import { Button } from "../ui/button"
 import { TaskFormInput, TaskSchema } from "@/app/_schema"
+import { Loader2 } from "lucide-react"
 
 const TaskForm = ({
   form,
   onSubmit,
+  isLoading,
 }: {
   form: UseFormReturn<TaskFormInput>
   onSubmit: (data: TaskFormInput) => void
+  isLoading: boolean
 }) => {
   const selectedType = useWatch({
     control: form.control,
@@ -147,7 +149,10 @@ const TaskForm = ({
         />
 
         <div>
-          <Button type="submit">Add Task</Button>
+          <Button type="submit">
+            {isLoading && <Loader2 className="animate-spin" />}
+            <span>Add Task</span>
+          </Button>
         </div>
       </form>
     </Form>

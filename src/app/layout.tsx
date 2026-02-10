@@ -5,6 +5,8 @@ import Stage from "@/components/stage"
 import { AuthProvider } from "@/context/auth-context"
 import { RightProvider } from "@/context/right-context"
 import RequireLandscape from "@/components/require-landscape"
+import { TRPCProvider } from "@/trpc/client"
+import { Toaster } from "@/components/ui/sonner"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,13 +33,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
       >
-        <RequireLandscape>
-          <AuthProvider>
-            <RightProvider>
-              <Stage>{children}</Stage>
-            </RightProvider>
-          </AuthProvider>
-        </RequireLandscape>
+        <TRPCProvider>
+          <RequireLandscape>
+            <AuthProvider>
+              <RightProvider>
+                <Stage>{children}</Stage>
+              </RightProvider>
+            </AuthProvider>
+          </RequireLandscape>
+        </TRPCProvider>
+        <Toaster />
       </body>
     </html>
   )

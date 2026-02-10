@@ -1,10 +1,15 @@
+"use client"
+
 import { Button } from "../ui/button"
 import { Plus } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { useRightContext } from "@/context/right-context"
+import { trpc } from "@/trpc/client"
 
 const TasksView = () => {
   const { setView } = useRightContext()
+
+  const { data, isLoading } = trpc.task.myTasks.useQuery()
 
   return (
     <>
@@ -20,7 +25,24 @@ const TasksView = () => {
         </Button>
       </div>
       <Separator className="my-3" />
-      Todo
+      {isLoading && <div>Loading...</div>}
+      {!isLoading && !data?.length && (
+        <div>You are all caught up for today 🎉</div>
+      )}
+
+      {!isLoading && data && (
+        <div className="space-y-3">
+          {data.map((task) => (
+            <div
+              key={task.id}
+              className="bg-secondary/30 p-3 rounded-md text-secondary-foreground hover:border border border-transparent hover:border-secondary cursor-pointer"
+            >
+              <h1>{task.title}</h1>
+              <p className="text-muted-foreground">{task.description}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </>
   )
 }
