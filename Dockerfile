@@ -14,6 +14,7 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN yarn prisma generate
+RUN yarn prisma db push
 RUN yarn build
 
 FROM base AS runner
