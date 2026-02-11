@@ -13,7 +13,13 @@ import SingleTaskRange from "./single-task-range"
 const TasksView = () => {
   const { setView } = useRightContext()
 
-  const { data, refetch } = trpc.task.myTasks.useQuery()
+  const { data, refetch } = trpc.task.myTasks.useQuery(undefined, {
+    refetchOnWindowFocus: true,
+    refetchInterval: 5000,
+    refetchOnMount: true,
+    refetchOnReconnect: true,
+  })
+
   const todayTasks = data?.todayTasks || []
   const upcomingTasks = data?.upcomingTasks || []
 
