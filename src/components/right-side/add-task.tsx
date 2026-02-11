@@ -44,7 +44,7 @@ const AddTaskView = () => {
   return (
     <>
       <div className="flex justify-between items-center gap-5">
-        <h1 className="text-2xl font-bold">Add Task</h1>
+        <h1 className="text-xl font-semibold">Add Task</h1>
         <Button
           size={"sm"}
           variant={"secondary"}

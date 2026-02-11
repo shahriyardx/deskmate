@@ -77,11 +77,16 @@ model Verification {
   @@map("verification")
 }
 
+enum TaskType {
+  deadline
+  range
+}
+
 model Task {
   id           String    @id @default(cuid())
   title        String
   description  String?
-  type         String
+  type         TaskType
   starts_at    DateTime?
   ends_at      DateTime?
   remind_hours Int       @default(0)
