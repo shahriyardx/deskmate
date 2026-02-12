@@ -3,7 +3,8 @@
 import DateAndTime from "@/components/left-side/date-and-time"
 import Footer from "@/components/left-side/footer"
 import { cn } from "@/lib/utils"
-import { Calendar } from "../ui/calendar"
+import OpenPRs from "./open-prs"
+import OpenIssues from "./open-isssues"
 
 const LeftSide = ({ className }: { className?: string }) => {
   return (
@@ -14,7 +15,10 @@ const LeftSide = ({ className }: { className?: string }) => {
       )}
     >
       <DateAndTime />
-      <div className="flex-1 grid grid-cols-3 gap-5"></div>
+      <div className="flex-1 mt-5 space-y-2">
+        <OpenPRs />
+        <OpenIssues />
+      </div>
       <Footer />
     </div>
   )
