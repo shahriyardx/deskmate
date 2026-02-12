@@ -5,6 +5,7 @@ import { AuthProvider } from "@/context/auth-context"
 import { RightProvider } from "@/context/right-context"
 import { TRPCProvider } from "@/trpc/client"
 import { Toaster } from "@/components/ui/sonner"
+import { TaskProvider } from "@/context/task-context"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +34,9 @@ export default function RootLayout({
       >
         <TRPCProvider>
           <AuthProvider>
-            <RightProvider>{children}</RightProvider>
+            <TaskProvider>
+              <RightProvider>{children}</RightProvider>
+            </TaskProvider>
           </AuthProvider>
         </TRPCProvider>
         <Toaster />

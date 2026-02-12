@@ -2,32 +2,22 @@
 
 import { Task } from "@/generated/prisma/client"
 import { Button } from "../ui/button"
-import { CheckIcon } from "lucide-react"
-import { trpc } from "@/trpc/client"
-import { toast } from "sonner"
+import { CheckIcon, TrashIcon } from "lucide-react"
 import moment from "moment"
 import { useEffect, useState } from "react"
 import { Badge } from "../ui/badge"
+import { useTaskContext } from "@/context/task-context"
 
 const SingleTaskDeadline = ({
   task,
-  refetch,
   category,
 }: {
   task: Task
-  refetch: () => void
   category: "today" | "upcoming"
 }) => {
+  const { markAsDone, deleteTask } = useTaskContext()
   const [isPastDue, setIsPastDue] = useState(false)
   const [showLong, setShowLong] = useState(false)
-
-  const { mutate } = trpc.task.markAsDone.useMutation({
-    onSuccess: () => {
-      refetch()
-      toast.success("Task marked as done")
-    },
-    onError: () => toast.error("Failed to mark task as done"),
-  })
 
   useEffect(() => {
     const updateStatus = () =>
@@ -43,13 +33,25 @@ const SingleTaskDeadline = ({
   return (
     <div className="bg-secondary/30 p-3 rounded-md text-secondary-foreground hover:border border border-transparent hover:border-secondary cursor-pointer group relative">
       <div className="absolute top-2 right-2 z-50 cursor-pointer hidden group-hover:block">
-        <Button
-          size="icon-xs"
-          variant="ghost"
-          onClick={() => mutate({ id: task.id })}
-        >
-          <CheckIcon />
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            size="icon-xs"
+            variant="outline"
+            onClick={() => deleteTask({ id: task.id })}
+            className="cursor-pointer"
+          >
+            <TrashIcon />
+          </Button>
+
+          <Button
+            size="icon-xs"
+            variant="outline"
+            onClick={() => markAsDone({ id: task.id })}
+            className="cursor-pointer"
+          >
+            <CheckIcon />
+          </Button>
+        </div>
       </div>
 
       <h1>

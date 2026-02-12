@@ -12,7 +12,7 @@ import { trpc } from "@/trpc/client"
 import { toast } from "sonner"
 
 const AddTaskView = () => {
-  const { setView } = useRightContext()
+  const { setView, refetchTasks } = useRightContext()
 
   const form = useForm<TaskFormInput>({
     resolver: zodResolver(taskSchema),
@@ -29,6 +29,7 @@ const AddTaskView = () => {
         description: "",
         type: "deadline",
       })
+      refetchTasks()
     },
     onError: () => {
       toast.error("Failed to add task")

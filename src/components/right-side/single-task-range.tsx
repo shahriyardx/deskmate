@@ -2,20 +2,14 @@
 
 import { Task } from "@/generated/prisma/client"
 import { Button } from "../ui/button"
-import { CheckIcon } from "lucide-react"
-import { trpc } from "@/trpc/client"
-import { toast } from "sonner"
+import { CheckIcon, TrashIcon } from "lucide-react"
 import moment from "moment"
 import { useCallback, useEffect, useState } from "react"
 import { Badge } from "../ui/badge"
+import { useTaskContext } from "@/context/task-context"
 
-const SingleTaskRange = ({
-  task,
-  refetch,
-}: {
-  task: Task
-  refetch: () => void
-}) => {
+const SingleTaskRange = ({ task }: { task: Task }) => {
+  const { markAsDone, deleteTask } = useTaskContext()
   const [deadline, setDeadline] = useState({
     start: "",
     end: "",
@@ -27,14 +21,6 @@ const SingleTaskRange = ({
     isRunning: false,
     range: "",
     isPastDue: false,
-  })
-
-  const { mutate } = trpc.task.markAsDone.useMutation({
-    onSuccess: () => {
-      refetch()
-      toast.success("Task marked as done")
-    },
-    onError: () => toast.error("Failed to mark task as done"),
   })
 
   const calculateDeadline = useCallback(() => {
@@ -91,7 +77,7 @@ const SingleTaskRange = ({
   if (!task.starts_at || !task.ends_at) return null
 
   return (
-    <div className="bg-secondary/30 p-3 rounded-md text-secondary-foreground hover:border border border-transparent hover:border-secondary cursor-pointer group relative">
+    <div className="bg-secondary/30 p-3 rounded-md text-secondary-foreground hover:border border border-transparent hover:border-secondary cursor-pointer group relative overflow-hidden">
       {deadline.isRunning && (
         <div
           className="absolute top-0 left-0 h-full bg-green-500/10 z-40 rounded-md pointer-events-none"
@@ -99,13 +85,25 @@ const SingleTaskRange = ({
         />
       )}
       <div className="absolute top-2 right-2 z-50 cursor-pointer hidden group-hover:block">
-        <Button
-          size="icon-xs"
-          variant="ghost"
-          onClick={() => mutate({ id: task.id })}
-        >
-          <CheckIcon />
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            size="icon-xs"
+            variant="outline"
+            onClick={() => deleteTask({ id: task.id })}
+            className="cursor-pointer"
+          >
+            <TrashIcon />
+          </Button>
+
+          <Button
+            size="icon-xs"
+            variant="outline"
+            onClick={() => markAsDone({ id: task.id })}
+            className="cursor-pointer"
+          >
+            <CheckIcon />
+          </Button>
+        </div>
       </div>
       <h1>
         {deadline.isRunning && (

@@ -55,16 +55,6 @@ export const taskRouter = createTRPCRouter({
       0,
     )
 
-    const endOfTomorrow = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate() + 1,
-      23,
-      59,
-      59,
-      999,
-    )
-
     const todayTasks = await prisma.task.findMany({
       where: {
         is_completed: false,
@@ -97,14 +87,12 @@ export const taskRouter = createTRPCRouter({
             type: "deadline",
             ends_at: {
               gte: startOfTomorrow,
-              lte: endOfTomorrow,
             },
           },
           {
             type: "range",
             starts_at: {
               gte: startOfTomorrow,
-              lte: endOfTomorrow,
             },
           },
         ],
@@ -119,7 +107,7 @@ export const taskRouter = createTRPCRouter({
             ? task.ends_at.getTime() - 1e15
             : task.ends_at.getTime()
         }
-        // Range tasks
+
         if (!task.starts_at) return 0
         return task.starts_at.getTime()
       }
@@ -127,23 +115,36 @@ export const taskRouter = createTRPCRouter({
       return getTime(a) - getTime(b)
     })
 
-    const sortedUpcomingTasks = upcomingTasks.sort((a, b) => {
-      const getTime = (task: Task) => {
-        if (task.type === "deadline") {
-          if (!task.starts_at || !task.ends_at) return 0
-          return task.ends_at < now
-            ? task.ends_at.getTime() - 1e15
-            : task.ends_at.getTime()
+    const groupedTasks = upcomingTasks.reduce(
+      (acc, task) => {
+        const taskDate =
+          task.type === "deadline" ? task.ends_at : task.starts_at
+
+        if (!taskDate) return acc
+
+        const date = new Date(taskDate)
+        date.setHours(0, 0, 0, 0)
+
+        const key = date.getTime() // number
+
+        if (!acc[key]) {
+          acc[key] = []
         }
 
-        if (!task.starts_at) return 0
-        return task.starts_at.getTime()
-      }
+        acc[key].push(task)
 
-      return getTime(a) - getTime(b)
-    })
+        return acc
+      },
+      {} as Record<number, typeof upcomingTasks>,
+    )
 
-    return { todayTasks: sortedTodayTasks, upcomingTasks: sortedUpcomingTasks }
+    return {
+      todayTasks: sortedTodayTasks,
+      upcomingTasks: {
+        count: upcomingTasks.length,
+        tasks: groupedTasks,
+      },
+    }
   }),
   markAsDone: protectedProcedure
     .input(z.object({ id: z.string() }))
@@ -156,6 +157,18 @@ export const taskRouter = createTRPCRouter({
         },
         data: {
           is_completed: true,
+        },
+      })
+      return task
+    }),
+  deleteTask: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const { session } = ctx
+      const task = await prisma.task.delete({
+        where: {
+          id: input.id,
+          userId: session.user.id,
         },
       })
       return task

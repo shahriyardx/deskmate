@@ -30,7 +30,7 @@
         "useImportType": "off"
       },
       "correctness": {
-        "noUnusedImports": "off"
+        "noUnusedImports": "on"
       },
       "a11y": {
         "useKeyWithClickEvents": "off",
