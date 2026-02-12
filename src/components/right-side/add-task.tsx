@@ -7,14 +7,12 @@ import { Button } from "../ui/button"
 import { ChevronLeft } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { useRightContext } from "@/context/right-context"
-import { TaskFormInput, TaskSchema, taskSchema } from "@/app/_schema"
-import { trpc } from "@/trpc/client"
-import { toast } from "sonner"
+import { TaskFormInput, taskSchema } from "@/app/_schema"
 import { useTaskContext } from "@/context/task-context"
 
 const AddTaskView = () => {
   const { setView } = useRightContext()
-  const { refetchTasks } = useTaskContext()
+  const { refetchTasks, addTask, addTaskPending } = useTaskContext()
 
   const form = useForm<TaskFormInput>({
     resolver: zodResolver(taskSchema),
@@ -23,23 +21,8 @@ const AddTaskView = () => {
     },
   })
 
-  const { mutate, isPending } = trpc.task.addTask.useMutation({
-    onSuccess: () => {
-      toast.success("Task added successfully")
-      form.reset({
-        title: "",
-        description: "",
-        type: "deadline",
-      })
-      refetchTasks()
-    },
-    onError: () => {
-      toast.error("Failed to add task")
-    },
-  })
-
   const onSubmit = async (data: TaskFormInput) => {
-    mutate(data as TaskSchema)
+    addTask(data, () => refetchTasks())
   }
 
   return (
@@ -58,7 +41,7 @@ const AddTaskView = () => {
 
       <Separator className="my-3" />
 
-      <TaskForm form={form} onSubmit={onSubmit} isLoading={isPending} />
+      <TaskForm form={form} onSubmit={onSubmit} isLoading={addTaskPending} />
     </>
   )
 }
