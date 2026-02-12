@@ -10,9 +10,11 @@ import { useRightContext } from "@/context/right-context"
 import { TaskFormInput, TaskSchema, taskSchema } from "@/app/_schema"
 import { trpc } from "@/trpc/client"
 import { toast } from "sonner"
+import { useTaskContext } from "@/context/task-context"
 
 const AddTaskView = () => {
-  const { setView, refetchTasks } = useRightContext()
+  const { setView } = useRightContext()
+  const { refetchTasks } = useTaskContext()
 
   const form = useForm<TaskFormInput>({
     resolver: zodResolver(taskSchema),
