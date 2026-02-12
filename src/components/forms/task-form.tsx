@@ -126,28 +126,6 @@ const TaskForm = ({
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="remind_hours"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Remind (hours)</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Enter number of days before you want soft reminder"
-                  {...field}
-                  value={(field.value as number) ?? 0}
-                />
-              </FormControl>
-              <FormDescription>
-                Controls how many hours before the deadline the task becomes
-                visible.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <div>
           <Button type="submit">
             {isLoading && <Loader2 className="animate-spin" />}

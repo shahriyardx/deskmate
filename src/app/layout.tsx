@@ -1,10 +1,8 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
-import Stage from "@/components/stage"
 import { AuthProvider } from "@/context/auth-context"
 import { RightProvider } from "@/context/right-context"
-import RequireLandscape from "@/components/require-landscape"
 import { TRPCProvider } from "@/trpc/client"
 import { Toaster } from "@/components/ui/sonner"
 
@@ -34,13 +32,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
       >
         <TRPCProvider>
-          <RequireLandscape>
-            <AuthProvider>
-              <RightProvider>
-                <Stage>{children}</Stage>
-              </RightProvider>
-            </AuthProvider>
-          </RequireLandscape>
+          <AuthProvider>
+            <RightProvider>{children}</RightProvider>
+          </AuthProvider>
         </TRPCProvider>
         <Toaster />
       </body>

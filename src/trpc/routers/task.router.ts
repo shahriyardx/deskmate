@@ -11,13 +11,7 @@ export const taskRouter = createTRPCRouter({
       const { session } = ctx
       const task = await prisma.task.create({
         data: {
-          title: input.title,
-          description: input.description,
-          type: input.type,
-          starts_at: input.starts_at,
-          ends_at: input.ends_at,
-          remind_hours: input.remind_hours,
-          is_completed: false,
+          ...input,
           user: {
             connect: {
               id: session.user.id,
@@ -141,7 +135,7 @@ export const taskRouter = createTRPCRouter({
             ? task.ends_at.getTime() - 1e15
             : task.ends_at.getTime()
         }
-        // Range tasks
+
         if (!task.starts_at) return 0
         return task.starts_at.getTime()
       }

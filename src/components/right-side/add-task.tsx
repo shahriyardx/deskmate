@@ -18,7 +18,6 @@ const AddTaskView = () => {
     resolver: zodResolver(taskSchema),
     defaultValues: {
       type: "deadline",
-      remind_hours: 0,
     },
   })
 
@@ -29,7 +28,6 @@ const AddTaskView = () => {
         title: "",
         description: "",
         type: "deadline",
-        remind_hours: 0,
       })
     },
     onError: () => {

@@ -3,14 +3,12 @@ import z from "zod"
 export const taskSchema = z
   .object({
     title: z.string("title is required").min(10),
-    description: z.string("description is required").min(10),
+    description: z.string().default(""),
     type: z.enum(["deadline", "range"]),
     starts_at: z.date().optional(),
     ends_at: z.date().optional(),
-    remind_hours: z.coerce.number(),
   })
   .superRefine((data, ctx) => {
-    // Conditional required fields
     if (data.type === "range") {
       if (!data.starts_at) {
         ctx.addIssue({
