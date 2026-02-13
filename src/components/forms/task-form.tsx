@@ -4,7 +4,6 @@ import { UseFormReturn, useWatch } from "react-hook-form"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,7 +20,7 @@ import { Input } from "../ui/input"
 import { Textarea } from "../ui/textarea"
 import { DateTimePicker } from "../ui/date-time-picker"
 import { Button } from "../ui/button"
-import { TaskFormInput, TaskSchema } from "@/app/_schema"
+import { TaskFormInput } from "@/app/_schema"
 import { Loader2 } from "lucide-react"
 
 const TaskForm = ({
@@ -127,7 +126,7 @@ const TaskForm = ({
         />
 
         <div>
-          <Button type="submit">
+          <Button type="submit" disabled={isLoading}>
             {isLoading && <Loader2 className="animate-spin" />}
             <span>Add Task</span>
           </Button>
