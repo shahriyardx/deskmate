@@ -46,5 +46,13 @@ export const taskSchema = z
     }
   })
 
+export const noteSchema = z.object({
+  title: z.string("title is required").min(5),
+  description: z.string().min(10),
+})
+
 export type TaskFormInput = z.input<typeof taskSchema>
 export type TaskSchema = z.output<typeof taskSchema>
+
+export type NoteFormInput = z.input<typeof noteSchema>
+export type NoteSchema = z.output<typeof noteSchema>

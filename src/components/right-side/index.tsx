@@ -3,6 +3,8 @@ import AddTaskView from "./add-task"
 import { useRightContext } from "@/context/right-context"
 import TasksView from "./tasks"
 import { cn } from "@/lib/utils"
+import NotesView from "./notes"
+import AddNoteView from "./add-note"
 
 const RightSide = ({ className }: { className?: string }) => {
   const { view } = useRightContext()
@@ -12,6 +14,8 @@ const RightSide = ({ className }: { className?: string }) => {
       <ScrollBar orientation="vertical" />
       {view === "add-task" && <AddTaskView />}
       {view === "tasks" && <TasksView />}
+      {view === "notes" && <NotesView />}
+      {view === "add-note" && <AddNoteView />}
     </ScrollArea>
   )
 }

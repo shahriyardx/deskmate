@@ -2,7 +2,7 @@
 
 import { ComponentProps, createContext, useContext, useState } from "react"
 
-export type RightView = "tasks" | "add-task"
+export type RightView = "tasks" | "add-task" | "notes" | "add-note"
 
 const RightContext = createContext<{
   view: RightView

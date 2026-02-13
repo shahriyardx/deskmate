@@ -11,6 +11,7 @@ import SingleTaskRange from "./single-task-range"
 import { Task } from "@/generated/prisma/client"
 import moment from "moment"
 import { useTaskContext } from "@/context/task-context"
+import Menu from "./menu"
 
 const TasksView = () => {
   const { setView } = useRightContext()
@@ -25,15 +26,18 @@ const TasksView = () => {
   return (
     <Tabs defaultValue="today">
       <div className="flex items-center justify-between">
-        <TabsList>
-          <TabsTrigger value="today">Today</TabsTrigger>
-          <TabsTrigger value="upcoming">
-            <span>Upcoming</span>
-            {upcomingTasks.count > 0 && (
-              <Badge variant="secondary">{upcomingTasks.count}</Badge>
-            )}
-          </TabsTrigger>
-        </TabsList>
+        <div className="flex items-center gap-2">
+          <Menu />
+          <TabsList>
+            <TabsTrigger value="today">Today</TabsTrigger>
+            <TabsTrigger value="upcoming">
+              <span>Upcoming</span>
+              {upcomingTasks.count > 0 && (
+                <Badge variant="secondary">{upcomingTasks.count}</Badge>
+              )}
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
         <Button
           size={"sm"}
