@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/popover"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { CalendarIcon } from "lucide-react"
+import { useMediaQuery } from "@/hooks/use-media-query"
 
 type DateTimePickerProps = {
   value?: Date
@@ -19,6 +20,8 @@ type DateTimePickerProps = {
 }
 
 export function DateTimePicker({ value, onChange }: DateTimePickerProps) {
+  const isMobile = useMediaQuery("(max-width: 640px)")
+
   function handleDateSelect(date?: Date) {
     if (!date) return
     const base = value ?? new Date()
@@ -76,7 +79,10 @@ export function DateTimePicker({ value, onChange }: DateTimePickerProps) {
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-auto p-0" side="left">
+      <PopoverContent
+        className="w-auto p-0"
+        side={isMobile ? "bottom" : "left"}
+      >
         <div className="sm:flex">
           <Calendar
             mode="single"
