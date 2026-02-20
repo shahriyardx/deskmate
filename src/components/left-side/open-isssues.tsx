@@ -1,7 +1,7 @@
 "use client"
 
 import { trpc } from "@/trpc/client"
-import { CircleDot, GitPullRequest } from "lucide-react"
+import { CircleDot } from "lucide-react"
 import {
   Dialog,
   DialogContent,

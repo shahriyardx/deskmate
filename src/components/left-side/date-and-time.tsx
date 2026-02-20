@@ -2,6 +2,8 @@
 
 import { cn } from "@/lib/utils"
 import { useState, useEffect } from "react"
+import SunsetAndSunrise from "./SunsetAndSunrise"
+import { Separator } from "../ui/separator"
 
 const DateAndTime = () => {
   const [clockOnly, setClockOnly] = useState(false)
@@ -67,8 +69,10 @@ const DateAndTime = () => {
       </h1>
 
       {!clockOnly && (
-        <h2 className="text-primary/70 font-semibold">
-          {formatDate(currentTime)}
+        <h2 className="text-primary/70 font-semibold flex items-center gap-5 h-5">
+          <span>{formatDate(currentTime)}</span>
+          <Separator orientation="vertical" />
+          <SunsetAndSunrise />
         </h2>
       )}
     </div>
