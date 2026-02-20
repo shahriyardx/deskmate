@@ -15,7 +15,7 @@ import Link from "next/link"
 const OpenIssues = () => {
   const { data, isLoading } = trpc.github.getOpenIssues.useQuery()
   if (isLoading || !data) return null
-  console.log(data)
+
   return (
     <div>
       <Dialog>
