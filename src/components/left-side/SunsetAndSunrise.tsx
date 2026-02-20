@@ -3,7 +3,6 @@ import { Sunrise, Sunset } from "lucide-react"
 import moment from "moment"
 import suncalc from "suncalc"
 
-
 const SunsetAndSunrise = () => {
   const location = useGeolocation()
   if (location.error) return
