@@ -3,7 +3,6 @@
 import { cn } from "@/lib/utils"
 import { useState, useEffect } from "react"
 import SunsetAndSunrise from "./SunsetAndSunrise"
-import { Separator } from "../ui/separator"
 
 const DateAndTime = () => {
   const [clockOnly, setClockOnly] = useState(false)
