@@ -69,7 +69,7 @@ const DateAndTime = () => {
       </h1>
 
       {!clockOnly && (
-        <h2 className="text-primary/70 font-semibold flex items-center gap-5 h-5">
+        <h2 className="text-primary/70 font-semibold flex items-center flex-wrap gap-2">
           <span>{formatDate(currentTime)}</span>
           <Separator orientation="vertical" />
           <SunsetAndSunrise />
